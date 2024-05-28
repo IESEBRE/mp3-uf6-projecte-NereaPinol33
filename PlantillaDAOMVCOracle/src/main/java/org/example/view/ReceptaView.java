@@ -3,7 +3,7 @@ package org.example.view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class MatriculaView extends JFrame{
+public class ReceptaView extends JFrame{
     private JTabbedPane pestanyes;
     private JTable taula;
     private JScrollPane scrollPane1;
@@ -11,27 +11,26 @@ public class MatriculaView extends JFrame{
     private JButton modificarButton;
     private JButton borrarButton;
     private JTextField campNom;
-    private JTextField campPes;
-    private JCheckBox caixaAlumne;
+    private JTextField campTemps;
     private JPanel panel;
-    private JTable taulaMat;
-    private JComboBox comboMP;
-    private JTextField campNota;
+    private JTable taulaIng;
+    private JComboBox comboIng;
+    private JTextField campQuant;
     //private JTabbedPane PanelPestanya;
 
     //Getters
 
 
-    public JTable getTaulaMat() {
-        return taulaMat;
+    public JTable gettaulaIng() {
+        return taulaIng;
     }
 
-    public JComboBox getComboMP() {
-        return comboMP;
+    public JComboBox getcomboIng() {
+        return comboIng;
     }
 
-    public JTextField getCampNota() {
-        return campNota;
+    public JTextField getcampQuant() {
+        return campQuant;
     }
 
     public JTabbedPane getPestanyes() {
@@ -58,17 +57,14 @@ public class MatriculaView extends JFrame{
         return campNom;
     }
 
-    public JTextField getCampPes() {
-        return campPes;
+    public JTextField getcampTemps() {
+        return campTemps;
     }
 
-    public JCheckBox getCaixaAlumne() {
-        return caixaAlumne;
-    }
 
 
     //Constructor de la classe
-    public MatriculaView() {
+    public ReceptaView() {
 
 
         //Per poder vore la finestra

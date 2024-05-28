@@ -19,7 +19,6 @@
             <artifactId>ojdbc8</artifactId>
             <version>18.4</version>
         </dependency>
-
     </dependencies>
 
 </project>
