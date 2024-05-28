@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 public class Recepta {
+    /**
+     * Aquesta classe representa una recepta de cuina
+     *
+     */
 
     private Long id;
     private String nom;
@@ -14,23 +18,47 @@ public class Recepta {
     public Recepta(){}
 
     public Recepta(String nom, double temps, Collection<Receptes> receptes) {
+        /**
+         * Constructor de la classe Recepta
+         * @param nom
+         * @param temps
+         * @param receptes
+         */
         this.nom = nom;
         this.temps = temps;
         this.receptes = receptes;
     }
 
     public Recepta(Long id, String nom) {
+        /**
+         * Constructor de la classe Recepta
+         * @param id
+         * @param nom
+         */
         this.id = id;
         this.nom = nom;
     }
 
     public Recepta(long id, String nom, double temps) {
+        /**
+         * Constructor de la classe Recepta
+         * @param id
+         * @param nom
+         * @param temps
+         */
         this.id = id;
         this.nom = nom;
         this.temps = temps;
     }
 
     public Recepta(long id, String nom, double temps, TreeSet<Receptes> receptes) {
+        /**
+         * Constructor de la classe Recepta
+         * @param id
+         * @param nom
+         * @param temps
+         * @param receptes
+         */
         this.id = id;
         this.nom = nom;
         this.temps = temps;
@@ -38,26 +66,50 @@ public class Recepta {
     }
 
     public Collection<Recepta.Receptes> getReceptes() {
+        /**
+         * Retorna la col·lecció de receptes
+         * @return
+         */
         return receptes;
     }
 
     private void setReceptes(Collection<Receptes> receptes) {
+        /**
+         * Assigna la col·lecció de receptes
+         * @param receptes
+         */
         this.receptes = receptes;
     }
 
     public String getNom() {
+        /**
+         * Retorna el nom de la recepta
+         * @return
+         */
         return nom;
     }
 
     public void setNom(String nom) {
+        /**
+         * Assigna el nom de la recepta
+         * @param nom
+         */
         this.nom = nom;
     }
 
     public double getTemps() {
+        /**
+         * Retorna el temps de la recepta
+         * @return
+         */
         return temps;
     }
 
     public void setTemps(double temps) {
+        /**
+         * Assigna el temps de la recepta
+         * @param temps
+         */
         this.temps = temps;
     }
 
@@ -71,13 +123,25 @@ public class Recepta {
 
 
     public static class Receptes implements Comparable<Receptes> {
+        /**
+         * Aquesta classe representa els ingredients d'una recepta
+         *
+         */
 
         @Override
         public int compareTo(Receptes o) {
+            /**
+             * Compara dos ingredients
+             * @param o
+             * @return
+             */
             return this.ingedient.compareTo(o.getIngedient());
         }
 
         public static enum Ingedient {
+            /**
+             * Enumeració dels ingredients
+             */
 
             //Lletra a
             Aigua(""), Alvocat(""), All(""), Albercocs(""),
@@ -147,11 +211,20 @@ public class Recepta {
         private int nota;
 
         public Receptes(Receptes.Ingedient ingedient, int nota) {
+            /**
+             * Constructor de la classe Receptes
+             * @param ingedient
+             * @param nota
+             */
             this.ingedient = ingedient;
             this.nota = nota;
         }
 
         public Receptes.Ingedient getIngedient() {
+            /**
+             * Retorna l'ingredient
+             * @return
+             */
             return ingedient;
         }
 

@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class ReceptaView extends JFrame{
+
     private JTabbedPane pestanyes;
     private JTable taula;
     private JScrollPane scrollPane1;
@@ -65,6 +66,9 @@ public class ReceptaView extends JFrame{
 
     //Constructor de la classe
     public ReceptaView() {
+        /**
+         * Constructor de la classe ReceptaView
+         */
 
 
         //Per poder vore la finestra
@@ -75,6 +79,9 @@ public class ReceptaView extends JFrame{
     }
 
         private void createUIComponents() {
+        /**
+         * Mètode que crea els components de la finestra
+         */
         // TODO: place custom component creation code here
         scrollPane1 = new JScrollPane();
         taula = new JTable();

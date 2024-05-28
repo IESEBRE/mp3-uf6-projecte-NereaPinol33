@@ -6,6 +6,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class ModelComponentsVisuals {
+    /**
+     * Aquesta classe conté els models de les taules i del comboBox
+     */
 
     private DefaultTableModel modelTaulaRecepta;
     private DefaultTableModel modeltaulaIng;
@@ -15,18 +18,33 @@ public class ModelComponentsVisuals {
 
 
     public ComboBoxModel<Recepta.Receptes.Ingedient> getComboBoxModel() {
+        /**
+         * Getter del comboBoxModel
+         * @return
+         */
         return comboBoxModel;
     }
 
     public DefaultTableModel getModelTaulaRecepta() {
+        /**
+         * Getter del modelTaulaRecepta
+         * @return
+         */
         return modelTaulaRecepta;
     }
 
     public DefaultTableModel getModeltaulaIng() {
+        /**
+         * Getter del modeltaulaIng
+         * @return
+         */
         return modeltaulaIng;
     }
 
     public ModelComponentsVisuals() {
+        /**
+         * Constructor de la classe ModelComponentsVisuals
+         */
 
 
         //Anem a definir l'estructura de la taula dels receptas
@@ -78,6 +96,14 @@ public class ModelComponentsVisuals {
              */
             @Override
             public boolean isCellEditable(int row, int column) {
+                /**
+                 * Returns true regardless of parameter values.
+                 *
+                 * @param row    the row whose value is to be queried
+                 * @param column the column whose value is to be queried
+                 * @return true
+                 * @see #setValueAt
+                 */
 
                 //Fem que TOTES les cel·les de la columna 1 de la taula es puguen editar
                 //if(column==1) return true;
@@ -87,6 +113,11 @@ public class ModelComponentsVisuals {
             //Permet definir el tipo de cada columna
             @Override
             public Class getColumnClass(int column) {
+                /**
+                 * Permet definir el tipo de cada columna
+                 * @param column
+                 * @return
+                 */
                 switch (column) {
                     case 0:
                         return Recepta.Receptes.Ingedient.class;

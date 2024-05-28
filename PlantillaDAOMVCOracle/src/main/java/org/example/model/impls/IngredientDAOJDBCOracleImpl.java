@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
+    /**
+     * Aquesta classe implementa la interfície DAO per a la classe Recepta
+     */
 
 
     @Override
     public Recepta get(Long id) throws DAOException {
+
 
         //Declaració de variables del mètode
         Connection con = null;
@@ -56,6 +60,11 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
 
     @Override
     public List<Recepta> getAll() throws DAOException {
+        /**
+         * Aquest mètode retorna totes les receptes de la BD
+         * @return
+         * @throws DAOException
+         */
         //Declaració de variables del mètode
         List<Recepta> recepta = new ArrayList<>();
 
@@ -90,6 +99,11 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
     }
 
     public Long getLastId() throws DAOException {
+        /**
+         * Aquest mètode retorna l'última ID de la taula RECEPTA
+         * @return
+         * @throws DAOException
+         */
         Connection con = null;
         Statement st = null;
         ResultSet rs = null;
@@ -125,6 +139,11 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
 
     @Override
     public void save(Recepta obj) throws DAOException {
+        /**
+         * Aquest mètode guarda una nova recepta a la BD
+         * @param obj
+         * @throws DAOException
+         */
         //Declaració de variables del mètode
         Connection con = null;
         PreparedStatement st = null;
@@ -172,6 +191,11 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
 
     @Override
     public void update(Recepta obj) throws DAOException {
+        /**
+         * Aquest mètode actualitza una recepta a la BD
+         * @param obj
+         * @throws DAOException
+         */
         Connection con = null;
         PreparedStatement st = null;
 
@@ -214,6 +238,11 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
 
     @Override
     public void delete(Long id) throws DAOException {
+        /**
+         * Aquest mètode elimina una recepta de la BD
+         * @param id
+         * @throws DAOException
+         */
         //Declaració de variables del mètode
         Connection con = null;
         PreparedStatement st = null;

@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DAOException extends Exception{
+    /**
+     * Aquesta classe representa una excepció de la BD
+     *
+     */
 
     private static final Map<Integer, String> missatges = new HashMap<>();
     //num i retorna string, el map
@@ -34,12 +38,17 @@ public class DAOException extends Exception{
 
     //constructor al q pasem tipo
     public DAOException(int tipo){
+        /**
+         * Constructor de la classe DAOException
+         * @param tipo
+         */
         this.tipo=tipo;
     }
 
     //sobreescrivim el get message
         @Override
     public String getMessage(){
+
         return missatges.get(this.tipo); //el missatge del tipo
     }
 

@@ -20,6 +20,11 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 public class Controller implements PropertyChangeListener { //1. Implementació de interfície PropertyChangeListener
+    /**
+     * The model components visuals.
+     * <p>
+     *
+     */
 
 
     private ModelComponentsVisuals modelComponentsVisuals =new ModelComponentsVisuals();
@@ -27,6 +32,12 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
     private ReceptaView view;
 
     public Controller(IngredientDAOJDBCOracleImpl dadesIngredients, ReceptaView view) {
+        /**
+         * Instantiates a new Controller.
+         *
+         * @param dadesIngredients the dades ingredients
+         * @param view             the view
+         */
         this.dadesIngredients = dadesIngredients;
         this.view = view;
 
@@ -43,6 +54,7 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
     }
 
     private void lligaVistaModel() {
+
 
         //Carreguem la taula d'receptas en les dades de la BD
         try {
@@ -75,6 +87,10 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
     }
 
     private void setModelTaulaRecepta(DefaultTableModel modelTaulaRecepta, List<Recepta> all) {
+        /**
+         * Sets model taula recepta.
+         *
+         */
 
         // Fill the table model with data from the collection
         for (Recepta estudiant : all) {
@@ -83,6 +99,9 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
     }
 
     private void afegirListeners() {
+        /**
+         * Afegir listeners.
+         */
 
         ModelComponentsVisuals modelo = this.modelComponentsVisuals;
         DefaultTableModel model = modelo.getModelTaulaRecepta();
@@ -267,6 +286,12 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
              */
             @Override
             public void mouseClicked(MouseEvent e) {
+                /**
+                 * {@inheritDoc}
+                 * @param e
+                 * @see MouseAdapter#mouseClicked(MouseEvent)
+
+                 */
                 super.mouseClicked(e);
 
                 //Obtenim el número de la fila seleccionada
@@ -355,6 +380,7 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
 
 
     private static void ompliReceptes(Recepta al, DefaultTableModel modelRe) {
+
         //Omplim el model de la taula de Ingredients de l'recepta seleccionat
         modelRe.setRowCount(0);
         // Fill the table model with data from the collection
@@ -371,10 +397,18 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
     private DAOException excepcio;
 
     public DAOException getExcepcio() {
+        /**
+         * Gets excepcio.
+         *
+         */
         return excepcio;
     }
 
     public void setExcepcio(DAOException excepcio) {
+        /**
+         * Sets excepcio.
+         *
+         */
         DAOException valorVell=this.excepcio;
         this.excepcio = excepcio;
         canvis.firePropertyChange(PROP_EXCEPCIO, valorVell,excepcio);
@@ -394,6 +428,10 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        /**
+         * Property change.
+         *
+         */
         DAOException rebuda=(DAOException)evt.getNewValue();
 
         try {
