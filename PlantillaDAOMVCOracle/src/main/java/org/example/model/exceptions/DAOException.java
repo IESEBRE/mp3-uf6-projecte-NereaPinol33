@@ -15,7 +15,9 @@ public class DAOException extends Exception{
         missatges.put(0, "Error al connectar a la BD!!");
         missatges.put(1, "Restricció d'integritat violada - clau primària duplicada");
         missatges.put(2, "No es poden inserir números en el Nom");
-        missatges.put(3, "No es poden inserir lletres en el Temps");
+        missatges.put(5, "No es trova el arxiu properties");
+        missatges.put(6, "Hi ha un error de lectura o escritura");
+        missatges.put(34, "No es poden posar caracter especials en el nom");
         missatges.put(904, "Nom de columna no vàlid");
         missatges.put(936, "Falta expressió en l'ordre SQL");
         missatges.put(942, "La taula o la vista no existeix");

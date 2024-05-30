@@ -93,8 +93,8 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
          */
 
         // Fill the table model with data from the collection
-        for (Recepta estudiant : all) {
-            modelTaulaRecepta.addRow(new Object[]{estudiant.getNom(), estudiant.getTemps(), true, estudiant});
+        for (Recepta cuina : all) {
+            modelTaulaRecepta.addRow(new Object[]{cuina.getNom(), cuina.getTemps(), cuina});
         }
     }
 
@@ -228,13 +228,13 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
                                 try {
                                     String tempsText = campTemps.getText().trim();
                                     if (tempsText.isEmpty()) {
-                                        throw new ParseException("El campo de tiempo está vacío", 0);
+                                        throw new ParseException("El camp de temps està buit", 0);
                                     }
 
                                     NumberFormat num = NumberFormat.getNumberInstance(Locale.getDefault()); // Creem un número que entèn la cultura que utilitza l'aplicació
                                     double temps = num.parse(tempsText).doubleValue(); // intentem convertir el text a double
 
-                                    if (temps < 1 || temps > 120) throw new ParseException("El valor de tiempo está fuera de rango", 0);
+                                    if (temps < 1 || temps > 120) throw new ParseException("El valor de temps está fora de rang", 0);
 
                                     // Obtén la receta seleccionada
                                     Recepta al = (Recepta) model.getValueAt(taula.getSelectedRow(), 2); // Cambiado el índice a 2
@@ -321,15 +321,44 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
             }
         });
         campNom.addKeyListener(new KeyAdapter() {
+            /**
+             * Invoked when a key has been typed.
+             * See the class description
+             * for {@code KeyEvent} for a definition of
+             * a key typed event.
+             * @param e
+             */
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-                if(!Character.isLetter(e.getKeyChar()) && e.getKeyChar()!=KeyEvent.VK_SPACE && e.getKeyChar()!=KeyEvent.VK_BACK_SPACE && e.getKeyChar()!=KeyEvent.VK_DELETE) {
+                JTextField textField = (JTextField) e.getSource();
+                String text = textField.getText();
+
+                char keyChar = e.getKeyChar();
+                String regex = "^[A-Z][a-zA-Z]*$";
+
+                if (Character.isLetter(keyChar)) {
+                    text += keyChar;
+                } else if (keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
+                    return;
+                } else {
+                    mostrarMensajeError();
                     e.consume();
-                    setExcepcio(new DAOException(2));
+                    setExcepcio(new DAOException(34));
+                    return;
+                }
+                if (!text.matches(regex)) {
+                    mostrarMensajeError();
+                    e.consume();
+                    setExcepcio(new DAOException(34));
                 }
             }
+            private void mostrarMensajeError() {
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "Aquest camp ha de començar amb una majúscula i només pot contenir lletres", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
+
         campTemps.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

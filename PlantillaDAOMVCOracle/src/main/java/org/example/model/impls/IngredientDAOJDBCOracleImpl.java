@@ -4,9 +4,14 @@ import org.example.model.daos.DAO;
 import org.example.model.entities.Recepta;
 import org.example.model.exceptions.DAOException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.TreeSet;
 
 public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
@@ -26,12 +31,19 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
         Recepta recepta = null;
 
         //Accés a la BD usant l'API JDBC
+
+        Properties prop = new Properties();
+        InputStream ins;
+
         try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
 
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@//localhost:1521/xe",
-                    "C##HR",
-                    "HR"
+                    url, user, password
             );
 //            st = con.prepareStatement("SELECT * FROM recepta WHERE id=?;");
             st = con.createStatement();
@@ -43,6 +55,10 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
             if (rs.next()) {
                 recepta = new Recepta(Long.valueOf(rs.getString(1)), rs.getString(2));
             }
+        } catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+        } catch (IOException ioex){
+            throw new DAOException(6);
         } catch (SQLException throwables) {
             throw new DAOException(1);
         } finally {
@@ -67,34 +83,44 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
          */
         //Declaració de variables del mètode
         List<Recepta> recepta = new ArrayList<>();
+        Properties prop = new Properties();
+        InputStream ins;
+        Connection con = null;
+        PreparedStatement st=null;
+        ResultSet rs=null;
+
 
         //Accés a la BD usant l'API JDBC
-        try (Connection con = DriverManager.getConnection(
-                "jdbc:oracle:thin:@//localhost:1521/xe",
-                "C##HR",
-                "HR"
-        );
-             PreparedStatement st = con.prepareStatement("SELECT * FROM RECEPTA");
-             ResultSet rs = st.executeQuery();
-        ) {
+        try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
+
+            con = DriverManager.getConnection(url, user, password);
+            st = con.prepareStatement("SELECT * FROM RECEPTA");
+            rs = st.executeQuery();
 
             while (rs.next()) {
                 recepta.add(new Recepta(rs.getLong("id"), rs.getString("nom"), rs.getDouble("temps"),
                         new TreeSet<Recepta.Receptes>()));
             }
+        } catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+        } catch (IOException ioex){
+            throw new DAOException(6);
         } catch (SQLException throwables) {
-            int tipoError = throwables.getErrorCode();
-            switch (throwables.getErrorCode()) {
-                case 17002: //l'he obtingut posant un sout en el throwables.getErrorCode()
-                    tipoError = 0;
-                    break;
-                default:
-                    tipoError = 1;  //error desconegut
+            throw new DAOException(1);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                throw new DAOException(1);
             }
-            throw new DAOException(tipoError);
         }
-
-
         return recepta;
     }
 
@@ -109,11 +135,17 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
         ResultSet rs = null;
         Long lastId = null;
 
+        Properties prop = new Properties();
+        InputStream ins;
+
         try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@//localhost:1521/xe",
-                    "C##HR",
-                    "HR"
+                    url, user, password
             );
             st = con.createStatement();
             rs = st.executeQuery("SELECT MAX(ID) AS MAX_ID FROM RECEPTA");
@@ -121,6 +153,10 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
             if (rs.next()) {
                 lastId = rs.getLong("MAX_ID");
             }
+        } catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+        } catch (IOException ioex){
+            throw new DAOException(6);
         } catch (SQLException throwables) {
             throw new DAOException(1);
         } finally {
@@ -148,10 +184,13 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
         Connection con = null;
         PreparedStatement st = null;
 
+
         // Asegúrate de que obj no sea null
         if (obj == null) {
             throw new DAOException(1);
         }
+        Properties prop = new Properties();
+        InputStream ins;
 
         // Asigna una nueva ID si es null
         if (obj.getId() == null) {
@@ -165,17 +204,25 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
 
         //Accés a la BD usant l'API JDBC
         try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
+
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@//localhost:1521/xe",
-                    "C##HR",
-                    "HR"
+                    url, user, password
             );
-            System.out.println("Connection established: " + (con != null));
+            System.out.println("Connexió establida: " + (con != null));
             st = con.prepareStatement("INSERT INTO RECEPTA (ID, NOM, TEMPS) VALUES (?, ?, ?)");
             st.setLong(1, obj.getId());
             st.setString(2, obj.getNom());
             st.setDouble(3, obj.getTemps());
             st.executeUpdate();
+        } catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+        } catch (IOException ioex){
+            throw new DAOException(6);
         } catch (SQLException throwables) {
             throw new DAOException(1);
         } finally {
@@ -202,34 +249,48 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
         if (obj == null) {
             throw new DAOException(777);
         }
+        Properties prop = new Properties();
+        InputStream ins;
+
 
         try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
+
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@//localhost:1521/xe",
-                    "C##HR",
-                    "HR"
+                    url, user, password
             );
-            System.out.println("Connection established: " + (con != null));
+            System.out.println("Connexió establida: " + (con != null));
 
             st = con.prepareStatement("UPDATE RECEPTA SET NOM = ?, TEMPS = ? WHERE ID = ?");
             st.setString(1, obj.getNom());
             st.setDouble(2, obj.getTemps());
             st.setLong(3, obj.getId());
 
-            System.out.println("Executing update for Recepta ID: " + obj.getId());
+            System.out.println("Executant modificació per a Recepta ID: " + obj.getId());
             int rowsUpdated = st.executeUpdate();
-            System.out.println("Rows updated: " + rowsUpdated);
+            System.out.println("Files modificades: " + rowsUpdated);
+
+        }catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+
+        } catch (IOException ioex){
+            throw new DAOException(6);
 
         } catch (SQLException throwables) {
-            System.err.println("SQLException occurred: " + throwables.getMessage());
+            System.err.println("SQLException: " + throwables.getMessage());
             throw new DAOException(1);
         } finally {
             try {
                 if (st != null) st.close();
                 if (con != null) con.close();
-                System.out.println("Resources closed successfully.");
+                System.out.println("Resources tancat correctament.");
             } catch (SQLException e) {
-                System.err.println("SQLException during resource cleanup: " + e.getMessage());
+                System.err.println("SQLException mentre resource limpiantse: " + e.getMessage());
                 throw new DAOException(1);
             }
         }
@@ -246,17 +307,27 @@ public class IngredientDAOJDBCOracleImpl implements DAO<Recepta> {
         //Declaració de variables del mètode
         Connection con = null;
         PreparedStatement st = null;
+        Properties prop = new Properties();
+        InputStream ins;
 
         //Accés a la BD usant l'API JDBC
         try {
+            ins = new FileInputStream("./src/main/resources/dataBase.properties");
+            prop.load(ins);
+            String url = prop.getProperty("db.url");
+            String user = prop.getProperty("db.user");
+            String password = prop.getProperty("db.password");
+
             con = DriverManager.getConnection(
-                    "jdbc:oracle:thin:@//localhost:1521/xe",
-                    "C##HR",
-                    "HR"
+                    url, user, password
             );
             st = con.prepareStatement("DELETE FROM RECEPTA WHERE ID = ?");
             st.setLong(1, id);
             st.executeUpdate();
+        } catch (FileNotFoundException notEx) {
+            throw new DAOException(5);
+        } catch (IOException ioex){
+            throw new DAOException(6);
         } catch (SQLException throwables) {
             throw new DAOException(1);
         } finally {
