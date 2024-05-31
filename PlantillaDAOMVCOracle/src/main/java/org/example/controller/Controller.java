@@ -331,31 +331,21 @@ public class Controller implements PropertyChangeListener { //1. Implementació 
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
+
                 JTextField textField = (JTextField) e.getSource();
                 String text = textField.getText();
-
                 char keyChar = e.getKeyChar();
-                String regex = "^[A-Z][a-zA-Z]*$";
 
-                if (Character.isLetter(keyChar)) {
-                    text += keyChar;
-                } else if (keyChar == KeyEvent.VK_BACK_SPACE || keyChar == KeyEvent.VK_DELETE) {
-                    return;
-                } else {
-                    mostrarMensajeError();
-                    e.consume();
-                    setExcepcio(new DAOException(34));
-                    return;
-                }
-                if (!text.matches(regex)) {
-                    mostrarMensajeError();
+                //Fem que accepte espais i majúscules
+                if (!Character.isLetter(keyChar) && keyChar != KeyEvent.VK_SPACE && keyChar != KeyEvent.VK_BACK_SPACE && keyChar != KeyEvent.VK_DELETE) {
+                    JPanel panel = new JPanel();
+                    JOptionPane.showMessageDialog(panel, "Aquest camp no pot contindre números ", "Error", JOptionPane.ERROR_MESSAGE);
                     e.consume();
                     setExcepcio(new DAOException(34));
                 }
-            }
-            private void mostrarMensajeError() {
-                JPanel panel = new JPanel();
-                JOptionPane.showMessageDialog(panel, "Aquest camp ha de començar amb una majúscula i només pot contenir lletres", "Error", JOptionPane.ERROR_MESSAGE);
+                if (text.length() == 0) {
+                    e.setKeyChar(Character.toUpperCase(keyChar));
+                }
             }
         });
 
