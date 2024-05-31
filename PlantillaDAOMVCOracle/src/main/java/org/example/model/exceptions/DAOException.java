@@ -4,12 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DAOException extends Exception{
+    /**
+     * Aquesta classe representa una excepció de la BD
+     *
+     */
 
     private static final Map<Integer, String> missatges = new HashMap<>();
     //num i retorna string, el map
     static {
         missatges.put(0, "Error al connectar a la BD!!");
         missatges.put(1, "Restricció d'integritat violada - clau primària duplicada");
+        missatges.put(2, "No es poden inserir números en el Nom");
+        missatges.put(5, "No es trova el arxiu properties");
+        missatges.put(6, "Hi ha un error de lectura o escritura");
+        missatges.put(34, "No es poden posar caracter especials en el nom");
         missatges.put(904, "Nom de columna no vàlid");
         missatges.put(936, "Falta expressió en l'ordre SQL");
         missatges.put(942, "La taula o la vista no existeix");
@@ -22,6 +30,9 @@ public class DAOException extends Exception{
         missatges.put(6502, "Error numèric o de valor durant l'execució del programa");
         missatges.put(12154, "No s'ha pogut resoldre el nom del servei de la base de dades Oracle o l'identificador de connexió");
         missatges.put(2292, "S'ha violat la restricció d'integritat -  s'ha trobat un registre fill");
+
+        missatges.put(777, "Recepta object is null");
+        missatges.put(999, "Error desconegut");
     }
 
     //atribut
@@ -29,12 +40,17 @@ public class DAOException extends Exception{
 
     //constructor al q pasem tipo
     public DAOException(int tipo){
+        /**
+         * Constructor de la classe DAOException
+         * @param tipo
+         */
         this.tipo=tipo;
     }
 
     //sobreescrivim el get message
         @Override
     public String getMessage(){
+
         return missatges.get(this.tipo); //el missatge del tipo
     }
 
